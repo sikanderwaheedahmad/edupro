@@ -1,0 +1,6 @@
+{
+  "name": "Edupro - Student Admission & Fee Voucher System",
+  "description": "Siqarah Public Model High School Shorkot (BISE Gujranwala) student admission management and automatic fee voucher generation system by Principal Dr. Saeed Ahmad.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

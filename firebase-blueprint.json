@@ -1,0 +1,155 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account and role profile for RBAC",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": {
+          "type": "string",
+          "enum": ["Super Admin", "Principal", "HR", "Accountant", "Clerk", "Teacher"]
+        },
+        "schoolId": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "INACTIVE"]
+        },
+        "requiresPasswordChange": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "lastLoginAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "name", "role", "status"]
+    },
+    "UserInvitation": {
+      "title": "User Invitation",
+      "description": "Invitation record for employee registration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "role": {
+          "type": "string",
+          "enum": ["Super Admin", "Principal", "HR", "Accountant", "Clerk", "Teacher"]
+        },
+        "schoolId": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "ACCEPTED", "EXPIRED"]
+        },
+        "invitedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "email", "role", "status"]
+    },
+    "SecurityAuditLog": {
+      "title": "Security Audit Log",
+      "description": "Secure immutable audit record of sensitive authentication and administrative events",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "actingUid": { "type": "string" },
+        "actingEmail": { "type": "string" },
+        "action": { "type": "string" },
+        "targetUid": { "type": "string" },
+        "targetEmail": { "type": "string" },
+        "role": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "details": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "action", "timestamp"]
+    },
+    "SystemSettings": {
+      "title": "Software & System Settings",
+      "description": "System-wide security and owner settings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "softwareName": { "type": "string" },
+        "ownerEmail": { "type": "string" },
+        "allowNewRegistrations": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "updatedBy": { "type": "string" }
+      },
+      "required": ["id", "softwareName", "ownerEmail"]
+    },
+    "School": {
+      "title": "School Tenant Profile",
+      "description": "Multi-tenant school profile and branding",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "schoolCode": { "type": "string" },
+        "schoolName": { "type": "string" },
+        "schoolNameUrdu": { "type": "string" },
+        "board": { "type": "string" },
+        "principal": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "introduction": { "type": "string" },
+        "campusAddress": { "type": "string" },
+        "activeSession": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "campusPicUrl": { "type": "string" },
+        "stampUrl": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "schoolName", "principal"]
+    },
+    "SchoolSettings": {
+      "title": "School Settings Document",
+      "description": "Dedicated school settings document",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "schoolName": { "type": "string" },
+        "board": { "type": "string" },
+        "principal": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "introduction": { "type": "string" },
+        "campusAddress": { "type": "string" },
+        "activeSession": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "stampUrl": { "type": "string" },
+        "website": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolId", "schoolName"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles with role-based access information"
+    },
+    "/user_invitations/{invitationId}": {
+      "schema": "UserInvitation",
+      "description": "Pending and processed staff invitations"
+    },
+    "/security_audit_logs/{logId}": {
+      "schema": "SecurityAuditLog",
+      "description": "Immutable security and authentication audit logs"
+    },
+    "/system_settings/{settingId}": {
+      "schema": "SystemSettings",
+      "description": "Software configuration and owner policies"
+    },
+    "/schools/{schoolId}": {
+      "schema": "School",
+      "description": "School institutional profile and configuration"
+    },
+    "/school_settings/{schoolId}": {
+      "schema": "SchoolSettings",
+      "description": "Dedicated settings document per school tenant"
+    }
+  }
+}

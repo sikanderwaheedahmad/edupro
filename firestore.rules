@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // User profiles collection
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Schools Registry & Profile Settings
+    match /schools/{schoolId} {
+      allow read, write: if true;
+
+      // Subcollections under school (settings, staff, students, vouchers, certificates)
+      match /{subcollection}/{docId} {
+        allow read, write: if true;
+      }
+    }
+
+    // School Settings collection
+    match /school_settings/{schoolId} {
+      allow read, write: if true;
+    }
+
+    // User invitations collection
+    match /user_invitations/{invitationId} {
+      allow read, write: if true;
+    }
+
+    // Security Audit Logs
+    match /security_audit_logs/{logId} {
+      allow read, write: if true;
+    }
+
+    // System Settings (Software Owner Level)
+    match /system_settings/{settingId} {
+      allow read, write: if true;
+    }
+  }
+}
+

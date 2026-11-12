@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #0f172a;
+    background-color: #f8fafc;
+  }
+}
+
+/* Monospace tabular numerals for financial and voucher data */
+.font-tabular {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Urdu calligraphy and Arabic text utilities */
+.font-urdu {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', serif;
+  line-height: 1.8;
+}
+
+.font-arabic {
+  font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Print-specific CSS: hides all UI, dashboard, sidebars, buttons, and renders pristine A4 voucher */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  /* Reset body and background for printing */
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Hide everything on page by default */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Only make active print elements visible */
+  .print-unhide {
+    display: block !important;
+    position: static !important;
+  }
+
+  .print-active,
+  .print-active *,
+  #printable-voucher,
+  #printable-voucher *,
+  #printable-document,
+  #printable-document *,
+  .printable-area,
+  .printable-area * {
+    visibility: visible !important;
+  }
+
+  /* Position printable voucher/document at the very top of print page */
+  .print-active,
+  #printable-voucher,
+  #printable-document,
+  .printable-area {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Hide print buttons and modals controls inside the voucher during print */
+  .no-print,
+  .no-print * {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Unclip modal wrappers in print view so documents never get cut off */
+  .fixed,
+  [role="dialog"],
+  .backdrop-blur-xs,
+  .overflow-y-auto,
+  .max-h-\[92vh\] {
+    position: static !important;
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    background: transparent !important;
+  }
+}
+
